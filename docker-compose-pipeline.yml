@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  web-pipeline: # REQUIRED: Changed container name
+    image: python:3.9-slim
+    working_dir: /app
+    volumes:
+      # REQUIRED FOR PART II: Volume attached for the code (no Dockerfile used)
+      - .:/app 
+    # Since we aren't using the Dockerfile, we install and run manually via command
+    command: sh -c "pip install -r requirements.txt && python app.py"
+    ports:
+      - "8080:5000" # REQUIRED: Changed port number
+    environment:
+      - DB_HOST=db-pipeline
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=appdb
+    depends_on:
+      - db-pipeline
+
+  db-pipeline: # REQUIRED: Changed container name
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=appdb
+    volumes:
+      - db_pipeline_data:/var/lib/mysql
+
+volumes:
+  db_pipeline_data:

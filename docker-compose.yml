@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  web:
+    # IMPORTANT: Change this to your actual Docker Hub username before deploying!
+    image: yourdockerhubusername/my-simple-app:latest
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=appdb
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=appdb
+    volumes:
+      # REQUIRED FOR PART I: Persistent volume attached to the database container
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
