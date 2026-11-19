@@ -4,7 +4,7 @@
 
 ---
 
-## Plain-English Summary (For Everyone)
+## Summary
 
 Imagine a simple website that counts how many times people have visited it and remembers that number even if the server restarts.
 
